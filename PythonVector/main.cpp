@@ -28,7 +28,7 @@ int main() {
     PythonVector range = d.range(1, 3);
     std::cout << range;
 
-    std::cout << b[-1] << std::endl;
+    std::cout << b[-5] << std::endl;
 
     // PythonVector e{};
     // e.fill_array(arr2, 0); // Not initialized memory
