@@ -25,11 +25,17 @@ int main() {
     std::cout << std::string(c) << std::endl;
 
     // PythonVector range = d.range(2, 4); // m should be less than m_size
+    // PythonVector range = d.range(2, 1); // n should be less than m
     PythonVector range = d.range(1, 3);
     std::cout << range;
 
     std::cout << b[2] << " " << b[-2] << " " << b[-10] << std::endl; // prints 2th, 3th and 0th element
 
+    PythonVector e = b + d;
+    PythonVector f = b * d;
+    std::cout << e;
+    std::cout << f;
+    
     // PythonVector e{};
     // e.fill_array(arr2, 0); // Not initialized memory
   } catch (const std::exception &e) {
