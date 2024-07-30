@@ -14,10 +14,8 @@ int main() {
 
     PythonVector c{b};
 
-    PythonVector d;
-    d = b;
-
-    std::cout << d;
+    PythonVector d{};
+    std::cout << (d = b);
 
     double arr2[3] = {1.11, 1e-3, 0.77};
     d = PythonVector(arr2, 3);
@@ -36,8 +34,8 @@ int main() {
     std::cout << e;
     std::cout << f;
     
-    // PythonVector e{};
-    // e.fill_array(arr2, 0); // Not initialized memory
+    // PythonVector g{};
+    // g.fill_array(arr2, 0); // Not initialized memory
   } catch (const std::exception &e) {
     return EXIT_FAILURE;
   }

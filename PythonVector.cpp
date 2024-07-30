@@ -66,12 +66,11 @@ PythonVector PythonVector::range(int n, int m) const {
   msg_assert(m <= m_size, "m should be less than m_size");
   
   const int res_size = m - n;
-  double * res = new double[res_size];
-  msg_assert(res, "Out of memory");
+  PythonVector res(res_size);
   
-  copy_array(m_array, m_size, res, res_size, n, m);
+  copy_array(m_array, m_size, res.m_array, res_size, n, m);
 
-  return PythonVector(res, res_size);
+  return res;
 }
 
 PythonVector::operator std::string() const {
@@ -104,25 +103,23 @@ double PythonVector::operator[](int idx) const {
 
 PythonVector PythonVector::operator+(const PythonVector & pv) const {
   const unsigned res_size = m_size + pv.m_size;
-  double * res = new double[res_size];
-  msg_assert(res, "Out of memory");
+  PythonVector res(res_size);
   
-  copy_array(m_array, m_size, res, res_size, 0, m_size);
-  copy_array(pv.m_array, pv.m_size, res, res_size, 0, pv.m_size, m_size);
+  copy_array(m_array, m_size, res.m_array, res_size, 0, m_size);
+  copy_array(pv.m_array, pv.m_size, res.m_array, res_size, 0, pv.m_size, m_size);
   
-  return PythonVector(res, res_size);
+  return res;
 }
 
 PythonVector PythonVector::operator*(const PythonVector & pv) const {
   const unsigned res_size = m_size * pv.m_size;
-  double * res = new double[res_size];
-  msg_assert(res, "Out of memory");
+  PythonVector res(res_size);
 
   for (unsigned i{}; i < pv.m_size; ++i)
     for (unsigned j{}; j < m_size; ++j)
-      res[i * m_size + j] = pv.m_array[i] * m_array[j];
+      res.m_array[i * m_size + j] = pv.m_array[i] * m_array[j];
 
-  return PythonVector(res, res_size);
+  return res;
 }
 
 std::ostream & operator<<(std::ostream & os, const PythonVector & pv) {

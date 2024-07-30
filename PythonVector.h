@@ -5,9 +5,9 @@
 #define msg_assert(condition, message) \
 do { \
     if (!(condition)) { \
-        std::cerr << "Assertion `" #condition "` failed in " << __FILE__ \
-                  << " line " << __LINE__ << ": " << message << std::endl; \
-    throw PythonVector::PythonVectorException(""); \
+      std::cerr << "Assertion `" #condition "` failed in " << __FILE__ \
+                << " line " << __LINE__ << ": " << message << std::endl; \
+      std::abort(); \
     } \
 } while (false)
 
@@ -35,9 +35,4 @@ public:
   PythonVector operator+(const PythonVector & pv) const;
   PythonVector operator*(const PythonVector & pv) const;
   friend std::ostream & operator<<(std::ostream & os, const PythonVector & pv);
-
-  class PythonVectorException : public std::runtime_error {
-  public:
-    PythonVectorException(std::string err) : std::runtime_error{err} {}
-  };
 };
