@@ -93,7 +93,7 @@ PythonVector::operator std::string() const {
 }
 
 double PythonVector::operator[](int idx) const {
-  if (!(idx % m_size))
+  if (!(std::abs(idx) % m_size))
     return m_array[0];
   
   if (idx >= 0)
