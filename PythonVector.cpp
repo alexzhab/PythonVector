@@ -124,9 +124,6 @@ PythonVector PythonVector::operator*(const PythonVector & pv) const {
 }
 
 std::ostream & operator<<(std::ostream & os, const PythonVector & pv) {
-  os << "PythonVector(" << pv.m_size << "): ";
-  for (unsigned i{}; i < pv.m_size; ++i)
-    os << pv.m_array[i] << " ";
-  os << std::endl;
+  os << std::string(pv) << std::endl;
   return os;
 }
