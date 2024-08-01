@@ -93,13 +93,10 @@ PythonVector::operator std::string() const {
 }
 
 double PythonVector::operator[](int idx) const {
-  if (!(std::abs(idx) % m_size))
-    return m_array[0];
-
   if (idx >= 0)
     return m_array[idx % m_size];
   else
-    return m_array[m_size - std::abs(idx) % m_size];
+    return m_array[m_size - 1 - std::abs(idx + 1) % m_size]; // shifting idx by 1 because negative numeration starts from -1, not 0
 }
 
 PythonVector PythonVector::operator+(const PythonVector & pv) const {
