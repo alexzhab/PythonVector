@@ -4,41 +4,40 @@
 const int arr_size = 5;
 
 int main() {
-  try {
-    double arr[arr_size] = {1.22, 3.550601, -10, 1e-308, 1e308};
+  double arr[arr_size] = {1, 2, 3, 4, 5};
 
-    PythonVector a(arr_size);
-    a.fill_array(arr, arr_size);
-    
-    PythonVector b(arr, arr_size);
+  PythonVector a(arr_size);
+  a.fill_array(arr, arr_size);
 
-    PythonVector c{b};
+  PythonVector b(arr, arr_size);
 
-    PythonVector d{};
-    std::cout << (d = b);
+  PythonVector c{b};
 
-    double arr2[3] = {1.11, 1e-3, 0.77};
-    d = PythonVector(arr2, 3);
-    std::cout << d;
-    std::cout << std::string(c) << std::endl;
+  PythonVector d{};
+  std::cout << (d = b);
 
-    // PythonVector range = d.range(2, 4); // m should be less than m_size
-    // PythonVector range = d.range(2, 1); // n should be less than m
-    PythonVector range = d.range(1, 3);
-    std::cout << range;
+  double arr2[3] = {1.11, 2, 0.77};
+  d = PythonVector(arr2, 3);
+  std::cout << d;
+  std::cout << std::string(c) << std::endl;
 
-    std::cout << b[2] << " " << b[-2] << " " << b[-10] << std::endl; // prints 2th, 3th and 0th element
+  // PythonVector range = d.range(2, 4); // m should be less than m_size
+  // PythonVector range = d.range(2, 1); // n should be less than m
+  PythonVector range = d.range(1, 3);
+  std::cout << range;
 
-    PythonVector e = b + d;
-    PythonVector f = b * d;
-    std::cout << e;
-    std::cout << f;
-    
-    // PythonVector g{};
-    // g.fill_array(arr2, 0); // Not initialized memory
-  } catch (const std::exception &e) {
-    return EXIT_FAILURE;
-  }
+  std::cout << b[2] << " " << b[-2] << " " << b[-10] << " " << b[10] << std::endl; // prints 2th, 3th and 0th element
+
+  PythonVector e = b + d;
+  PythonVector f = b * d;
+  std::cout << e;
+  std::cout << f;
+
+  PythonVector j{0};
+  std::cout << j + b;
+  // PythonVector h{nullptr, 10}; // // Not initialized memory
+  // PythonVector g{};
+  // g.fill_array(arr2, 0); // Not initialized memory
   
   return 0;
 }
