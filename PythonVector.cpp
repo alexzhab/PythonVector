@@ -66,7 +66,7 @@ void PythonVector::fill_array(const double * src, const unsigned size) {
   copy_array(src, m_array, m_size);
 }
 
-PythonVector PythonVector::range(int n, int m) const {
+PythonVector PythonVector::range(unsigned n, unsigned m) const {
   msg_assert(n < m, "n should be less than m");
   msg_assert(m <= m_size, "m should be less than m_size");
   
@@ -74,6 +74,19 @@ PythonVector PythonVector::range(int n, int m) const {
   PythonVector res(res_size);
   
   copy_array(m_array + n, res.m_array, res_size);
+
+  return res;
+}
+
+PythonVector range(int n, int m, int step) {
+  msg_assert(n < m, "n should be less than m");
+  msg_assert(step >= 0, "step should be non-negative");
+
+  const int res_size = m - n;
+  PythonVector res(res_size);
+
+  for (int i{}; i < res_size; ++i)
+    res.m_array[i] = n + i * step;
 
   return res;
 }

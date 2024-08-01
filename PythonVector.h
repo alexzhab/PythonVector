@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
+class PythonVector;
+PythonVector range(int n, int m, int step = 1);
+
 class PythonVector {
 private:
   double * m_array = nullptr;
@@ -8,6 +11,7 @@ private:
 
   void init(unsigned size, const double * array = nullptr);
   void clean();
+
 public:
   PythonVector() = default;
   PythonVector(unsigned size);
@@ -20,7 +24,14 @@ public:
     return m_size;
   }
   void fill_array(const double * src, const unsigned size);
-  PythonVector range(int n, int m) const;
+  PythonVector range(unsigned n, unsigned m) const;
+  friend PythonVector range(int n, int m, int step);
+  const double * begin() const { 
+    return m_array; 
+  }
+  const double * end() const { 
+    return m_array + m_size;
+  }
 
   explicit operator std::string() const;
   double operator[](int idx) const;
