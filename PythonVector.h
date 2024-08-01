@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <stdexcept>
 
 #define msg_assert(condition, message) \
 do { \
@@ -16,6 +15,8 @@ private:
   double * m_array = nullptr;
   unsigned m_size{0};
 
+  void init(unsigned size, const double * array = nullptr);
+  void clean();
 public:
   PythonVector() = default;
   PythonVector(unsigned size);

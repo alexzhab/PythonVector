@@ -1,4 +1,5 @@
 #include "PythonVector.h"
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -12,48 +13,50 @@ void copy_array(const double * src, const unsigned src_size, double * dst, const
   msg_assert(src && dst, "Not initialized memory");
   msg_assert(src_end_id <= src_size, "Out of src array range");
   msg_assert(dst_start_id + src_end_id - src_start_id <= dst_size, "Out of dst array range");
-  
+
   for (unsigned i{}; i < src_end_id - src_start_id; ++i)
     dst[dst_start_id + i] = src[src_start_id + i];
 }
 
-PythonVector::PythonVector(unsigned size) : m_size{size} {
+void PythonVector::init(unsigned size, const double * array) {
+  m_size = size;
   m_array = new double[m_size];
   msg_assert(m_array, "Out of memory");
+
+  if (array)
+    copy_array(array, m_array, m_size);
 }
 
-PythonVector::PythonVector(const double * array, unsigned size) : m_size{size} {
-  m_array = new double[m_size];
-  msg_assert(m_array, "Out of memory");
-  
-  copy_array(array, m_array, m_size);
+void PythonVector::clean() {
+  delete[] m_array;
+  m_array = nullptr;
+  m_size = 0;
+}
+
+PythonVector::PythonVector(unsigned size) {
+  init(size);
+}
+
+PythonVector::PythonVector(const double * array, unsigned size) {
+  init(size, array);
 }
 
 PythonVector::PythonVector(const PythonVector & pv) {
-  m_size = pv.get_size();
-  m_array = new double[m_size];
-  msg_assert(m_array, "Out of memory");
-  
-  copy_array(pv.m_array, m_array, m_size);
+  init(pv.get_size(), pv.m_array);
 }
 
 PythonVector & PythonVector::operator=(const PythonVector & pv) {
   if (this == &pv)
     return *this;
-  delete[] m_array;
-  m_size = pv.get_size();
-  m_array = new double[m_size];
-  msg_assert(m_array, "Out of memory");
   
-  copy_array(pv.m_array, m_array, m_size);
+  clean();
+  init(pv.get_size(), pv.m_array);
   
   return *this;
 }
 
 PythonVector::~PythonVector() {
-  delete[] m_array;
-  m_array = nullptr;
-  m_size = 0;
+  clean();
 }
 
 void PythonVector::fill_array(const double * src, const unsigned size) {
@@ -75,7 +78,7 @@ PythonVector PythonVector::range(int n, int m) const {
 
 PythonVector::operator std::string() const {
   std::string str;
-  
+
   str += "{";
   for (unsigned i{}; i < m_size; ++i) {
     if (i != 0)
@@ -87,14 +90,14 @@ PythonVector::operator std::string() const {
       str += ",";
   }
   str += "}";
-  
+
   return str;
 }
 
 double PythonVector::operator[](int idx) const {
   if (!(std::abs(idx) % m_size))
     return m_array[0];
-  
+
   if (idx >= 0)
     return m_array[idx % m_size];
   else
@@ -104,10 +107,10 @@ double PythonVector::operator[](int idx) const {
 PythonVector PythonVector::operator+(const PythonVector & pv) const {
   const unsigned res_size = m_size + pv.m_size;
   PythonVector res(res_size);
-  
+
   copy_array(m_array, m_size, res.m_array, res_size, 0, m_size);
   copy_array(pv.m_array, pv.m_size, res.m_array, res_size, 0, pv.m_size, m_size);
-  
+
   return res;
 }
 
