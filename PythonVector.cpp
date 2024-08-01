@@ -77,21 +77,19 @@ PythonVector PythonVector::range(int n, int m) const {
 }
 
 PythonVector::operator std::string() const {
-  std::string str;
+  std::ostringstream os;
 
-  str += "{";
+  os << "{";
   for (unsigned i{}; i < m_size; ++i) {
     if (i != 0)
-      str += " ";
-    std::ostringstream os;
+      os << " ";
     os << m_array[i];
-    str += os.str();
     if (i != m_size - 1)
-      str += ",";
+      os << ",";
   }
-  str += "}";
+  os << "}";
 
-  return str;
+  return os.str();
 }
 
 double PythonVector::operator[](int idx) const {
