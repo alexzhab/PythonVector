@@ -10,17 +10,20 @@ int main() {
   std::cout << std::endl << "Checking constructors: " << std::endl;
   PythonVector a(arr_size);
   a.fill_array(arr, arr_size);
+  std::cout << a;
 
   PythonVector b(arr, arr_size);
+  std::cout << b;
 
   PythonVector c{b};
+  std::cout << c;
 
   PythonVector d{};
   std::cout << (d = b);
 
   double arr2[3] = {-1, 2, 0.7};
   d = PythonVector(arr2, 3);
-  std::cout << std::string(d) << std::endl;
+  std::cout << d;
 
   std::cout << std::endl << "Checking member range: " << std::endl;
   // PythonVector rng = d.range(2, 4); // m should be less than m_size
@@ -29,12 +32,16 @@ int main() {
   std::cout << rng;
 
   std::cout << std::endl << "Checking range loop: " << std::endl;
-  std::cout << std::setw(14) << "[-10, 10]: ";
+  std::cout << std::setw(20) << std::left << "range(-10, 10): ";
   for (int i: range(-10, 10)) 
     std::cout << b[i] << " ";
   std::cout << std::endl;
-  std::cout << std::setw(14) << "[-10, 10, 2]: ";
+  std::cout << std::setw(20) << std::left << "range(-10, 10, 2): ";
   for (int i: range(-10, 10, 2)) 
+    std::cout << b[i] << " ";
+  std::cout << std::endl;
+  std::cout << std::setw(20) << std::left << "range(7): ";
+  for (int i: range(7)) 
     std::cout << b[i] << " ";
   std::cout << std::endl;
   // for (int i: range(-10, 10, -1)) // step should be non-negative

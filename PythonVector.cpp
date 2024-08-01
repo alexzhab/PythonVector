@@ -91,6 +91,10 @@ PythonVector range(int n, int m, int step) {
   return res;
 }
 
+PythonVector range(int n) {
+  return range(0, n);
+}
+
 PythonVector::operator std::string() const {
   std::ostringstream os;
 

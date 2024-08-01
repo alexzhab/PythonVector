@@ -3,6 +3,7 @@
 
 class PythonVector;
 PythonVector range(int n, int m, int step = 1);
+PythonVector range(int n);
 
 class PythonVector {
 private:
@@ -26,6 +27,7 @@ public:
   void fill_array(const double * src, const unsigned size);
   PythonVector range(unsigned n, unsigned m) const;
   friend PythonVector range(int n, int m, int step);
+  friend PythonVector range(int n);
   const double * begin() const { 
     return m_array; 
   }
