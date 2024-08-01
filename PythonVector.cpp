@@ -3,19 +3,30 @@
 #include <sstream>
 #include <string>
 
-void copy_array(const double * src, double * dst, const unsigned size) {
-  msg_assert(src && dst, "Not initialized memory");
-  for (unsigned i{}; i < size; ++i)
-    dst[i] = src[i];
-}
+namespace {
+  #define msg_assert(condition, message) \
+  do { \
+      if (!(condition)) { \
+        std::cerr << "Assertion `" #condition "` failed in " << __FILE__ \
+                  << " line " << __LINE__ << ": " << message << std::endl; \
+        std::abort(); \
+      } \
+  } while (false)
 
-void copy_array(const double * src, const unsigned src_size, double * dst, const unsigned dst_size, int src_start_id, int src_end_id, int dst_start_id = 0) {
-  msg_assert(src && dst, "Not initialized memory");
-  msg_assert(src_end_id <= src_size, "Out of src array range");
-  msg_assert(dst_start_id + src_end_id - src_start_id <= dst_size, "Out of dst array range");
+  void copy_array(const double * src, double * dst, const unsigned size) {
+    msg_assert(src && dst, "Not initialized memory");
+    for (unsigned i{}; i < size; ++i)
+      dst[i] = src[i];
+  }
 
-  for (unsigned i{}; i < src_end_id - src_start_id; ++i)
-    dst[dst_start_id + i] = src[src_start_id + i];
+  void copy_array(const double * src, const unsigned src_size, double * dst, const unsigned dst_size, int src_start_id, int src_end_id, int dst_start_id = 0) {
+    msg_assert(src && dst, "Not initialized memory");
+    msg_assert(src_end_id <= src_size, "Out of src array range");
+    msg_assert(dst_start_id + src_end_id - src_start_id <= dst_size, "Out of dst array range");
+
+    for (unsigned i{}; i < src_end_id - src_start_id; ++i)
+      dst[dst_start_id + i] = src[src_start_id + i];
+  }
 }
 
 void PythonVector::init(unsigned size, const double * array) {
